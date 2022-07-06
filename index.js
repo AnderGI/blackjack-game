@@ -1,10 +1,11 @@
 //player its name and $$$
-/*
+
 let player={
-    name: prompt("What\'s your name?", ),
-    chips: " $" + 250 
+    //name: want to try and make it a kind of prompt. SOmething that enhances interaction
+    chips: 50 
 }
-*/
+
+
 // cards, array. new cards will be pushe every time the user presses the button
 // new cards. they wiil be added after the first two random cards
 let cards = []
@@ -15,7 +16,7 @@ let sum = 0
 Some functions
 - startthe game
 - new card 
-- resset (start from scratch)
+- new game
 - see if the user has blackjack(the sum of the cards is 21)
 */
 
@@ -37,23 +38,24 @@ function getRandomCard(){
 // in order for the use to see the cards and the sum it needs to be rendered inside startGame()
 
 function startGame(){
-    isPlaying = true
-    let firstCard = getRandomCard()
-    let secondCard = getRandomCard()
-    cards[firstCard, secondCard] // at the beginning there is an empty cards list
-    sum = firstCard + secondCard
-    document.getElementById("cards-el").textContent = "Cards: " + firstCard + " " + secondCard + " "
-    document.getElementById("sum-el").textContent = "Sum: " + sum + " "
-    //let usernameEl= document.getElementById("username")
-    //usernameEl.textContent += player.name
-    //let chipsEl =  document.getElementById("chips") 
-    //chipsEl.textContent += player.chips
-    verifyBlackjack()
+    if(document.getElementById("chips").textContent === "Chips: $" + 0){noChips()}
+    else if(document.getElementById("chips").textContent !== "Chips: $" + 0){
+        isPlaying = true
+        let firstCard = getRandomCard()
+        let secondCard = getRandomCard()
+        cards[firstCard, secondCard] // at the beginning there is an empty cards list
+        sum = firstCard + secondCard
+        document.getElementById("cards-el").textContent = "Cards: " + firstCard + " " + secondCard + " "
+        document.getElementById("sum-el").textContent = "Sum: " + sum + " "
+        document.getElementById("chips").textContent = "Chips: $"+ player.chips
+        verifyBlackjack()
+    }
 }
 
 //with the first two letters the game has to verify that the user has blackjack,
 //it does not have it or if it has surpass its limit (game over)
 function verifyBlackjack(){
+    
  document.getElementById("message-el").textContent = "Do you want to play?"
     if(sum < 21){
         document.getElementById("message-el").textContent ="Do you want another card?"
@@ -61,10 +63,15 @@ function verifyBlackjack(){
     else if(sum === 21){ 
         document.getElementById("message-el").textContent ="You have Blackjack"
         hasBlackjack = true
+        player.chips = player.chips + 50
+        document.getElementById("chips").textContent = "Chips: $"+ player.chips
     }
     else{
-        document.getElementById("message-el").textContent ="Game over, you have surpassed 21"
         isPlaying = false
+        player.chips = player.chips - 50
+        document.getElementById("chips").textContent = "Chips: $"+ player.chips
+        noChips()
+        document.getElementById("message-el").textContent ="Game over, you have surpassed 21"
 }
 }
 
@@ -76,6 +83,7 @@ function verifyBlackjack(){
 
 //new card only if the game is on and if it has no blackjack
 function newCard(){
+    noChips()
     if(isPlaying=== true && hasBlackjack===false){
         let card = getRandomCard()
         cards.push(card)
@@ -87,13 +95,25 @@ function newCard(){
 }
 
 //when the game is over everything can be reset to zero if the user wants it 
-function resetGame(){
-    if (isPlaying=== false){
+function foldGame(){
         document.getElementById("cards-el").textContent = "Cards: "
         document.getElementById("sum-el").textContent = "Sum: "
-    }
-    
+        document.getElementById("chips").textContent = "Chips: $"+ player.chips
+        
 }
+
+ 
+function noChips(){
+    if(document.getElementById("chips").textContent === "Chips: $" + 0){
+        isPlaying = false
+        hasBlackjack = false
+        document.getElementById("message-el").textContent ="You have 0 chips left. You can\'t play."
+        document.getElementById("cards-el").textContent = "Cards: "
+        sum = 0
+        document.getElementById("sum-el").textContent = "Sum: "
+    }
+}
+
 
 
 
