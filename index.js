@@ -1,10 +1,10 @@
 //player its name and $$$
-
+/*
 let player={
     name: prompt("What\'s your name?", ),
     chips: " $" + 250 
 }
-
+*/
 // cards, array. new cards will be pushe every time the user presses the button
 // new cards. they wiil be added after the first two random cards
 let cards = []
@@ -24,8 +24,12 @@ let hasBlackjack = false //by default the user does not have it
 let isPlaying = false // = without pressing the button it wont happen
 
 //a function that returns random values from 1 to 13 (the blackjack card quantity)
+// in balckjack ace has a value of 11 and J Q K a value of 10
 function getRandomCard(){
-    return Math.floor(Math.random()*13)+1
+    let randomNumber = Math.floor(Math.random()*13)+1 //aces have a value of 10 and 11 12 and 13 a value of 11
+    if (randomNumber>10){return 10}
+    else if (randomNumber===1){return 11}
+    else{return randomNumber}
 }
 
 
@@ -40,10 +44,10 @@ function startGame(){
     sum = firstCard + secondCard
     document.getElementById("cards-el").textContent = "Cards: " + firstCard + " " + secondCard + " "
     document.getElementById("sum-el").textContent = "Sum: " + sum + " "
-    let usernameEl= document.getElementById("username")
-    usernameEl.textContent += player.name
-    let chipsEl =  document.getElementById("chips") 
-    chipsEl.textContent += player.chips
+    //let usernameEl= document.getElementById("username")
+    //usernameEl.textContent += player.name
+    //let chipsEl =  document.getElementById("chips") 
+    //chipsEl.textContent += player.chips
     verifyBlackjack()
 }
 
@@ -63,6 +67,12 @@ function verifyBlackjack(){
         isPlaying = false
 }
 }
+
+// in blackjack 1 or Ace has a value of ten and the cards 11 12 and 13 a value
+
+
+
+
 
 //new card only if the game is on and if it has no blackjack
 function newCard(){
